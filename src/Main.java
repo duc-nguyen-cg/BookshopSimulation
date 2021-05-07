@@ -14,7 +14,7 @@ public class Main {
         int userChoice;
         do {
             printMenu();
-            userChoice = InputChecker.inputIntegerInBounds(0, 8);
+            userChoice = InputChecker.inputIntegerInBounds(0, 9);
             switch (userChoice){
                 case 1:
                     itemManager.display(); break;
@@ -25,7 +25,7 @@ public class Main {
                 case 4:
                     itemManager.edit(); break;
                 case 5:
-                    itemManager.searchByID(); break;
+                    itemManager.search(); break;
                 case 6:
                     itemManager.sort(); break;
                 case 7:
@@ -50,7 +50,7 @@ public class Main {
         System.out.println("2. Add an item");
         System.out.println("3. Remove an item");
         System.out.println("4. Edit an item");
-        System.out.println("5. Search an item by ID");
+        System.out.println("5. Search an item");
         System.out.println("6. Sort");
         System.out.println("7. Export data");
         System.out.println("8. Import data");

@@ -10,7 +10,7 @@ import static IOTask.CSVFileTask.CSV_FILEPATH_REGEX;
 import static basicClass.Item.*;
 
 public class ItemManagement {
-    public static final String EMPTY_MESSAGE = "The list is empty!";
+    public static final String EMPTY_MESSAGE = "The bookshop is empty!";
     private static Scanner scanner = new Scanner(System.in);
 
     private List<Item> itemList = new ArrayList<>();
@@ -112,14 +112,46 @@ public class ItemManagement {
     }
 
 
-    //search an item by ID
-    public void searchByID(){
+    //edit information
+    public void edit(){
         if (isEmpty()){
             System.err.println(EMPTY_MESSAGE);
             return;
         }
+        System.out.println("Enter ID: ");
+        String editID = scanner.nextLine();
+        Item editItem = binarySearch(itemList, editID);
+        if (editItem == null){
+            return;
+        }
+        editItem.inputItemInfo();
+        update();
+    }
+
+
+    //search
+    public void search(){
+        if (isEmpty()){
+            System.err.println(EMPTY_MESSAGE);
+            return;
+        }
+        System.out.println("Search by:  1.ID  2.Name");
+        int choice = InputChecker.inputIntegerInBounds(1,2);
+        if (choice == 1){
+            searchByID();
+        } else {
+            searchByName();
+        }
+    }
+
+    //search an item by ID
+    private void searchByID(){
         System.out.println("Enter ID to search: ");
         String searchID = scanner.nextLine();
+        //add a switch case here
+        //
+        //
+        //
         Item searchItem = binarySearch(itemList, searchID);
         if (searchItem == null){
             System.err.println("Not found!");
@@ -130,17 +162,21 @@ public class ItemManagement {
 
 
     //search by name
-    public void searchByName(){
-        if (isEmpty()){
-            System.err.println(EMPTY_MESSAGE);
-            return;
-        }
-        System.out.println("Enter the name of item: ");
-        String searchKey = scanner.nextLine();
+    private void searchByName(){
+        System.out.println("Enter one keyword: ");
+        String searchKey = InputChecker.inputString("^ *([a-zA-Z0-9]+) *$");
         searchKey = searchKey.trim();
-        String[] searchWords = searchKey.split(" ");
-        for (Item item: itemList){
+        searchKey = searchKey.toLowerCase();
 
+        for (Item item: itemList){
+            String[] foundWords = item.getName().split(" ");
+            for (String word: foundWords){
+                word = word.trim();
+                word = word.toLowerCase();
+                if (searchKey.equals(word)){
+                    System.out.println(item);
+                }
+            }
         }
     }
 
@@ -215,21 +251,7 @@ public class ItemManagement {
     }
 
 
-    //edit information
-    public void edit(){
-        if (isEmpty()){
-            System.err.println(EMPTY_MESSAGE);
-            return;
-        }
-        System.out.println("Enter ID: ");
-        String editID = scanner.nextLine();
-        Item editItem = binarySearch(itemList, editID);
-        if (editItem == null){
-            return;
-        }
-        editItem.inputItemInfo();
-        update();
-    }
+
 
 
     //search by ID in any List of items

@@ -8,7 +8,7 @@ import java.util.List;
 public abstract class SubItemList {
     private final String EMPTY_MESSAGE = "The list is empty!";
 
-    protected List<Item> result = new ArrayList<>();
+    public List<Item> result = new ArrayList<>();
     protected ItemManagement itemManager;
 
     protected abstract void update();

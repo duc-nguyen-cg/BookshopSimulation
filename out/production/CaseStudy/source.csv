@@ -1,6 +1,27 @@
 ID, Name, Quantity, Price, Publisher, Author, Number of pages, Category, No, Released Month, Released Date, Producer, Type
-D1152,86,100,20,Kadokawa,Asato Asato,150,Mecha,,,,,
-D1207,1984,10,5,London,Orwell,100,Dystopia,,,,,
-D2981,Newsweek,100,2.5,New York, , , ,2,18-Mar,,,
-D3127,Wall Street Journal,50,2.99,New York, , , , , ,7/7/1992,,
+D1152,86,100,20.69,Kadokawa,Asato Asato,150,Mecha,,,,,
+D1207,1984,10,5.2,Signet Press,Georger Orwell,100,Dystopia,,,,,
+D1318,Attack on Titan,250,139.5,Kodansha,Isayama Hajime,80,"Politics, Fantasy",,,,,
+D1592,Pride and Prejudice,700,258.4,Routledge,Jane Austen,2200,Literature,,,,,
+D1681,The Laughing Man,40,75.67,Springer,Victor Hugo,1008,Literature,,,,,
+D1725,Biology,68,9.98,Elsevier,John Campbell,418,Science,,,,,
+D1996,Cambrige Dictionary,99,7.99,Cambrige University Press,V.A.,200,Language,,,,,
+D2233,Newsweek,56,2.5,Graham Holdings, , , ,2,1-Mar,,,
+D2348,Psychology Today,10,3.4,American Science,,,,74,1-May,,,
+D2599,Forbes,25,10.6,Forbes,,,,158,1-Dec,,,
+D2700,Time,70,20.55,Time Warner,,,,62,1-Jul,,,
+D2786,National Geographic,48,4.8,Smithsonian,,,,1,1-Mar,,,
+D2813,The WatchTower,68,6.7,Jehovaism,,,,70,1-Jul,,,
+D2828,Bloomberg,39,17,Bloomberg Corp,,,,328,1-Mar,,,
+D3027,The Wall Street Journal,50,2.99,New York, , , , , ,7/7/1992,,
+D3189,The New York Times,340,3.4,New York,,,,,,1/1/1900,,
+D3321,Washington Post,407,1.06,Washington,,,,,,2/2/1913,,
+D3345,The Guardian,289,2.055,London,,,,,,3/12/2008,,
+D3510,USA Today,568,4.8,New York,,,,,,9/21/2001,,
+D3824,Nikkei,747,6.7,Tokyo,,,,,,6/6/1940,,
+D3911,Chicago Tribune,666,1.7,Chicago,,,,,,9/1/1945,,
 S528,Pencil,200,1.5, , , , , , , ,Hong Ha,2B
+S582,Pen,300,1.99,,,,,,,,Thien Long,Ballpoint
+S777,Eraser,78,1.79,,,,,,,,Thien Long,Plastic
+S810,Ruler,97,2.89,,,,,,,,Hong Ha,Centimeter
+S811,Lamp,23,35.99,,,,,,,,Dien Quang,Tube

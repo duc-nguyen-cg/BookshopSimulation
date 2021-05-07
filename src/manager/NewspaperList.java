@@ -21,7 +21,7 @@ public class NewspaperList extends SubItemList {
 
     @Override
     public void print(){
-        System.out.println("\nAvailable newspaper: ");
+        System.out.println("\nAvailable newspapers: ");
         super.print();
     }
 }

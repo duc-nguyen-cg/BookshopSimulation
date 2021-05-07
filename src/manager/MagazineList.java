@@ -21,7 +21,7 @@ public class MagazineList extends SubItemList {
 
     @Override
     public void print(){
-        System.out.println("\nAvailable magazine: ");
+        System.out.println("\nAvailable magazines: ");
         super.print();
     }
 }
