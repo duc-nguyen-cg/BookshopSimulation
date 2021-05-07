@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class InputChecker {
-    private static final String ERROR_MESSAGE = "Invalid input, please enter again: ";
+    private static final String INPUT_ERROR_MESSAGE = "Invalid input, please enter again: ";
 
     private static final String DATE_REGEX = "^(0?[1-9]|1[012])[/-](0?[1-9]|[12][0-9]|3[01])[/-]([12]\\d\\d\\d)$";
     private static final String DATE_FORMAT = "mm/dd/yyyy or mm-dd-yyyy";
@@ -22,10 +22,10 @@ public class InputChecker {
             try {
                 result = scanner.nextInt();
                 if (result < min | result > max){
-                    System.err.println(ERROR_MESSAGE);
+                    System.err.println(INPUT_ERROR_MESSAGE + "integer between "+min +" and "+ max);
                 }
             } catch (InputMismatchException e){
-                System.err.println(ERROR_MESSAGE);
+                System.err.println(INPUT_ERROR_MESSAGE + "integer between "+min +" and "+ max);
             }
             scanner.nextLine();
         } while (result < min | result > max);
@@ -39,16 +39,46 @@ public class InputChecker {
             try {
                 result = scanner.nextDouble();
                 if (result < min | result > max){
-                    System.err.println(ERROR_MESSAGE);
+                    System.err.println(INPUT_ERROR_MESSAGE + "double between "+min +" and "+ max);
                 }
             } catch (InputMismatchException e){
-                System.err.println(ERROR_MESSAGE);
+                System.err.println(INPUT_ERROR_MESSAGE + "double between "+min +" and "+ max);
             }
             scanner.nextLine();
         } while (result < min | result > max);
         return result;
     }
 
+
+    public static String inputString(int length){
+        String str;
+        do {
+            str = scanner.nextLine();
+            str = str.trim();
+            if (str.length() > length){
+                System.err.println(INPUT_ERROR_MESSAGE + "String should not exceed "+length+" character(s)");
+            }
+        } while (str.length() > length);
+        return str;
+    }
+
+
+    public static String inputString(String regex){
+        String str;
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher;
+        boolean isValid;
+        do {
+            str = scanner.nextLine();
+            str = str.trim();
+            matcher = pattern.matcher(str);
+            isValid = matcher.matches();
+            if (!isValid){
+                System.err.println(INPUT_ERROR_MESSAGE);
+            }
+        } while (!isValid);
+        return str;
+    }
 
 
     public static String inputDate(){
@@ -61,7 +91,7 @@ public class InputChecker {
             matcher = pattern.matcher(str);
             isDate = matcher.matches();
             if (!isDate){
-                System.err.println(ERROR_MESSAGE + DATE_FORMAT);
+                System.err.println(INPUT_ERROR_MESSAGE + DATE_FORMAT);
             }
         } while (!isDate);
         return str;
@@ -78,9 +108,10 @@ public class InputChecker {
             matcher = pattern.matcher(str);
             isMonth = matcher.matches();
             if (!isMonth){
-                System.err.println(ERROR_MESSAGE + MONTH_FORMAT);
+                System.err.println(INPUT_ERROR_MESSAGE + MONTH_FORMAT);
             }
         } while (!isMonth);
         return str;
     }
+
 }

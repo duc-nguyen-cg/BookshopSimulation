@@ -1,0 +1,5 @@
+ID, Name, Quantity, Price, Publisher, Author, Number of pages, Category, No, Released Month, Released Date, Producer, Type
+D1, 1984, 10, 5.0,London,Orwell, 100, Dystopia
+D2, Newsweek, 100, 2.5,New York, , , ,2,3/2018
+D3, Wall Street Journal, 50, 2.99,New York, , , , , ,7/7/1992
+S, Pencil, 200, 1.5, , , , , , , ,Hong Ha,2B

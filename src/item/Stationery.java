@@ -44,10 +44,9 @@ public class Stationery extends Item{
     public void inputItemInfo(){
         super.inputItemInfo();
 
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Producer: ");
-        producer = scanner.nextLine();
+        producer = InputChecker.inputString(MAX_STRING_LENGTH);
         System.out.println("Type: ");
-        type = scanner.nextLine();
+        type = InputChecker.inputString(MAX_STRING_LENGTH);
     }
 }

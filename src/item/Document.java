@@ -5,11 +5,11 @@ import java.util.Scanner;
 public abstract class Document extends Item{
     private String publisher;
 
-    public Document() {
+    protected Document() {
         super.setId(DOCUMENT_ID);
     }
 
-    public Document(String name, int quantity, double price, String publisher) {
+    protected Document(String name, int quantity, double price, String publisher) {
         super(name, quantity, price);
         super.setId(DOCUMENT_ID);
         this.publisher = publisher;
@@ -33,8 +33,7 @@ public abstract class Document extends Item{
     public void inputItemInfo(){
         super.inputItemInfo();
 
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Publisher: ");
-        publisher = scanner.nextLine();
+        publisher = InputChecker.inputString(MAX_STRING_LENGTH);
     }
 }

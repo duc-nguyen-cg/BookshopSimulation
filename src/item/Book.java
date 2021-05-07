@@ -11,7 +11,7 @@ public class Book extends Document {
         super.setId(super.getId()+BOOK_CODE);
     }
 
-    public Book(String name, int quantity, double price, String publisher, String author, String category, int pageNum) {
+    public Book(String name, int quantity, double price, String publisher, String author, int pageNum, String category) {
         super(name, quantity, price, publisher);
         super.setId(super.getId()+BOOK_CODE);
         this.author = author;
@@ -55,11 +55,10 @@ public class Book extends Document {
     public void inputItemInfo() {
         super.inputItemInfo();
 
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Author: ");
-        author = scanner.nextLine();
+        author = InputChecker.inputString(MAX_STRING_LENGTH);
         System.out.println("Category: ");
-        category = scanner.nextLine();
+        category = InputChecker.inputString(MAX_STRING_LENGTH);
         System.out.println("Number of pages: ");
         pageNum = InputChecker.inputIntegerInBounds(1, Integer.MAX_VALUE);
     }

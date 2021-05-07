@@ -5,7 +5,6 @@ public class ItemGenerator {
     private ItemGenerator(){};
 
     public static Item getItem(int itemCode){
-        Item newItem;
 
         switch (itemCode){
             case BOOK_CODE:
