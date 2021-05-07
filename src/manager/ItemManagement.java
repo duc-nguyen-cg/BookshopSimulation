@@ -251,6 +251,17 @@ public class ItemManagement {
     }
 
 
+    //clear all data
+    public void clearAll(){
+        System.out.println("Are you sure?     1.Continue   0.Cancel");
+        int choice = InputChecker.inputIntegerInBounds(0, 1);
+        if (choice == 1) {
+            itemList.clear();
+            System.err.println(EMPTY_MESSAGE);
+        }
+        update();
+    }
+
 
 
 
@@ -307,14 +318,4 @@ public class ItemManagement {
         }
         System.out.println();
     }
-
-
-    public void testList(){
-        itemList.add(new Book("1984", 10, 5.0, "London", "Orwell", 100, "Dystopia"));
-        itemList.add(new Magazine("Newsweek", 100, 2.5, "New York", 2, "3/2018" ));
-        itemList.add(new Newspaper("Wall Street Journal", 50, 2.99, "New York", "7/7/1992"));
-        itemList.add(new Stationery("Pencil", 200, 1.5, "Hong Ha", "2B"));
-    }
-
-
 }

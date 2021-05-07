@@ -32,6 +32,8 @@ public class Main {
                     itemManager.exportData(); break;
                 case 8:
                     itemManager.importData(); break;
+                case 9:
+                    itemManager.clearAll(); break;
                 case 0:
                     System.exit(0);
             }
@@ -47,13 +49,14 @@ public class Main {
         }
         System.out.println("\nMenu: ");
         System.out.println("1. Display items");
-        System.out.println("2. Add an item");
-        System.out.println("3. Remove an item");
-        System.out.println("4. Edit an item");
-        System.out.println("5. Search an item");
+        System.out.println("2. Add");
+        System.out.println("3. Remove");
+        System.out.println("4. Edit");
+        System.out.println("5. Search");
         System.out.println("6. Sort");
         System.out.println("7. Export data");
         System.out.println("8. Import data");
+        System.out.println("9. Clear all data");
         System.out.println("0. Exit");
         System.out.println("Enter your choice: ");
     }
