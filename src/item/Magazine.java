@@ -5,12 +5,12 @@ public class Magazine extends Document{
     private String releaseMonth;
 
     public Magazine() {
-        super.setId(super.getId()+MAGAZINE_CODE);
+        super.setId(MAGAZINE_ID);
     }
 
     public Magazine(String name, int quantity, double price, String publisher, int no, String releaseMonth) {
         super(name, quantity, price, publisher);
-        super.setId(super.getId()+MAGAZINE_CODE);
+        super.setId(MAGAZINE_ID);
         this.no = no;
         this.releaseMonth = releaseMonth;
     }
@@ -43,7 +43,7 @@ public class Magazine extends Document{
         super.inputItemInfo();
 
         System.out.println("No: ");
-        no = InputChecker.inputIntegerInBounds(1, Integer.MAX_VALUE);
+        no = InputChecker.inputIntegerInBounds(MIN_NO, MAX_NO);
         System.out.println("Released month: ");
         releaseMonth = InputChecker.inputMonth();
     }

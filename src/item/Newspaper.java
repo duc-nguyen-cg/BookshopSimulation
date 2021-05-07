@@ -4,12 +4,12 @@ public class Newspaper extends Document{
     private String releaseDate;
 
     public Newspaper() {
-        super.setId(super.getId()+NEWSPAPER_CODE);
+        super.setId(NEWSPAPER_ID);
     }
 
     public Newspaper(String name, int quantity, double price, String publisher, String releaseDate) {
         super(name, quantity, price, publisher);
-        super.setId(super.getId()+NEWSPAPER_CODE);
+        super.setId(NEWSPAPER_ID);
         this.releaseDate = releaseDate;
     }
 

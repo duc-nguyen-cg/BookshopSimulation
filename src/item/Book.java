@@ -1,23 +1,22 @@
 package item;
 
-import java.util.Scanner;
-
 public class Book extends Document {
     private String author;
     private String category;
     private int pageNum;
 
     public Book() {
-        super.setId(super.getId()+BOOK_CODE);
+        super.setId(BOOK_ID);
     }
 
     public Book(String name, int quantity, double price, String publisher, String author, int pageNum, String category) {
         super(name, quantity, price, publisher);
-        super.setId(super.getId()+BOOK_CODE);
+        super.setId(BOOK_ID);
         this.author = author;
         this.category = category;
         this.pageNum = pageNum;
     }
+
 
     public String getAuthor() {
         return author;
@@ -60,6 +59,6 @@ public class Book extends Document {
         System.out.println("Category: ");
         category = InputChecker.inputString(MAX_STRING_LENGTH);
         System.out.println("Number of pages: ");
-        pageNum = InputChecker.inputIntegerInBounds(1, Integer.MAX_VALUE);
+        pageNum = InputChecker.inputIntegerInBounds(MIN_PAGE_NUM, MAX_PAGE_NUM);
     }
 }

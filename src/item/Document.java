@@ -6,12 +6,10 @@ public abstract class Document extends Item{
     private String publisher;
 
     protected Document() {
-        super.setId(DOCUMENT_ID);
     }
 
     protected Document(String name, int quantity, double price, String publisher) {
         super(name, quantity, price);
-        super.setId(DOCUMENT_ID);
         this.publisher = publisher;
     }
 

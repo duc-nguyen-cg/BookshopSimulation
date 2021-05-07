@@ -5,7 +5,6 @@ public class Main {
         ItemManagement itemManager = ItemManagement.getInstance();
         int userChoice;
 
-        itemManager.testList();
         do {
             printMenu();
             userChoice = InputChecker.inputIntegerInBounds(0, 7);
