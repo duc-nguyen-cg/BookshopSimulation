@@ -1,6 +1,6 @@
 package item;
 
-import java.util.Scanner;
+import inputCheck.InputChecker;
 
 public class Stationery extends Item{
     private String producer;

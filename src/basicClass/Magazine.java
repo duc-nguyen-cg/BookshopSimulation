@@ -1,5 +1,7 @@
 package item;
 
+import inputCheck.InputChecker;
+
 public class Magazine extends Document{
     private int no;
     private String releaseMonth;

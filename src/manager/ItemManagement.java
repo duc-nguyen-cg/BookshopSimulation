@@ -1,15 +1,20 @@
+package itemManagement;
+
 import IOTask.*;
+import inputCheck.InputChecker;
 import item.*;
+
 import java.util.*;
 import static IOTask.BinaryFileTask.BINARY_FILEPATH_REGEX;
 import static IOTask.CSVFileTask.CSV_FILEPATH_REGEX;
 import static item.Item.*;
 
 public class ItemManagement {
-    private static final String EMPTY_MESSAGE = "The shop is empty!";
+    public static final String EMPTY_MESSAGE = "The list is empty!";
     private static Scanner scanner = new Scanner(System.in);
 
     private List<Item> itemList = new ArrayList<>();
+
 
     //set up singleton
     private static final ItemManagement itemManager = new ItemManagement();
@@ -18,27 +23,49 @@ public class ItemManagement {
         return itemManager;
     }
 
+
+    //set up observers
+    private List<SubItemList> observers = new ArrayList<>();
+    public void addObserver(SubItemList o){
+        observers.add(o);
+    }
+    private void update(){
+        for (SubItemList observer: observers){
+            observer.update();
+        }
+    }
+
+
+    //return a clone of the item list
+    public List<Item> getItemList(){
+        List<Item> clone = new ArrayList<>(itemList);
+        return clone;
+    }
+
+
     //check if the list is empty
     public boolean isEmpty(){
         return itemList.isEmpty();
     }
 
 
-    //print all items
+    //print items by type
     public void display(){
-        if (isEmpty()){
-            System.err.println(EMPTY_MESSAGE);
-            return;
+        System.out.println("Enter list to display: 0.Book  1.Magazine  2.Newspaper  3.Stationery  4.All");
+        int choice = InputChecker.inputIntegerInBounds(0,4);
+
+        switch (choice){
+            case 0:
+                observers.get(0).print(); break;
+            case 1:
+                observers.get(1).print(); break;
+            case 2:
+                observers.get(2).print(); break;
+            case 3:
+                observers.get(3).print(); break;
+            case 4:
+                print(itemList); break;
         }
-        for (int i = 0; i < 10; i++){
-            System.out.print("-");
-        }
-        System.out.println("\nAvailable products: ");
-        printList(itemList);
-        for (int i = 0; i < 10; i++){
-            System.out.print("-");
-        }
-        System.out.println();
     }
 
 
@@ -62,6 +89,7 @@ public class ItemManagement {
         System.out.println("Added '"+ newItem +"' successfully!");
         itemList.add(newItem);
         itemList.sort(Comparator.comparing(Item::getId));
+        update();
     }
 
 
@@ -80,6 +108,7 @@ public class ItemManagement {
             itemList.remove(removeItem);
             System.out.println("Removed '"+ removeItem+ "' successfully!");
         }
+        update();
     }
 
 
@@ -127,7 +156,9 @@ public class ItemManagement {
         List<Item> newList = new ArrayList<>(itemList);
         switch (choice){
             case 0:
-                newList.sort(Comparator.comparing(Item::getId)); break;
+                newList.sort(Comparator.comparing(Item::getId));
+                itemList = new ArrayList<>(newList);
+                break;
             case 1:
                 newList.sort(Comparator.comparing(Item::getName)); break;
             case 2:
@@ -135,23 +166,27 @@ public class ItemManagement {
             case 3:
                 newList.sort(Comparator.comparing(Item::getPrice)); break;
         }
-        printList(newList);
+        print(newList);
     }
 
 
     //write into file
     public void exportData(){
+        if (isEmpty()){
+            System.err.println(EMPTY_MESSAGE);
+            return;
+        }
         IOTaskWithItem writer;
         String dest;
 
         System.out.println("Choose type of dest:  1.Binary  2.CSV");
         int choice = InputChecker.inputIntegerInBounds(1,2);
         if (choice == 1){
-            System.out.println("Enter dest ends with .txt: ");
+            System.out.println("Enter output filepath ends with .txt: ");
             dest = InputChecker.inputString(BINARY_FILEPATH_REGEX);
             writer = BinaryFileTask.getInstance();
         } else {
-            System.out.println("Enter dest ends with .csv: ");
+            System.out.println("Enter output filepath ends with .csv: ");
             dest = InputChecker.inputString(CSV_FILEPATH_REGEX);
             writer = CSVFileTask.getInstance();
         }
@@ -167,17 +202,34 @@ public class ItemManagement {
         System.out.println("Choose type of file:  1.Binary  2.CSV");
         int choice = InputChecker.inputIntegerInBounds(1,2);
         if (choice == 1){
-            System.out.println("Enter source ends with .txt: ");
+            System.out.println("Enter input filepath ends with .txt: ");
             source = InputChecker.inputString(BINARY_FILEPATH_REGEX);
             reader = BinaryFileTask.getInstance();
         } else {
-            System.out.println("Enter source ends with .csv: ");
+            System.out.println("Enter input filepath ends with .csv: ");
             source = InputChecker.inputString(CSV_FILEPATH_REGEX);
             reader = CSVFileTask.getInstance();
         }
         itemList = reader.read(itemList, source);
+        update();
     }
 
+
+    //edit information
+    public void edit(){
+        if (isEmpty()){
+            System.err.println(EMPTY_MESSAGE);
+            return;
+        }
+        System.out.println("Enter ID: ");
+        String editID = scanner.nextLine();
+        Item editItem = binarySearch(itemList, editID);
+        if (editItem == null){
+            return;
+        }
+        editItem.inputItemInfo();
+        update();
+    }
 
 
     //search by ID in any List of items
@@ -220,12 +272,18 @@ public class ItemManagement {
 
 
     //print any list
-    private void printList(List<Item> list){
+    private void print(List<Item> list){
+        System.out.println("\nAvailable items: ");
+        if (list.isEmpty()){
+            System.err.println(EMPTY_MESSAGE);
+            return;
+        }
         Iterator<Item> iterator = list.iterator();
         while (iterator.hasNext()){
             Item item = iterator.next();
             System.out.println(item);
         }
+        System.out.println();
     }
 
 

@@ -1,6 +1,6 @@
 package item;
 
-import java.util.Scanner;
+import inputCheck.InputChecker;
 
 public abstract class Document extends Item{
     private String publisher;

@@ -1,5 +1,7 @@
 package item;
 
+import inputCheck.InputChecker;
+
 public class Book extends Document {
     private String author;
     private String category;

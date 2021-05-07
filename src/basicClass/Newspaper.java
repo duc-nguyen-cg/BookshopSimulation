@@ -1,5 +1,7 @@
 package item;
 
+import inputCheck.InputChecker;
+
 public class Newspaper extends Document{
     private String releaseDate;
 
