@@ -1,6 +1,6 @@
-package item;
+package basicClass;
 
-import inputCheck.InputChecker;
+import inputChecker.InputChecker;
 
 public class Book extends Document {
     private String author;

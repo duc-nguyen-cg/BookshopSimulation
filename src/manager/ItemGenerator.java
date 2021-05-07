@@ -1,7 +1,7 @@
-package itemManagement;
+package manager;
 
-import item.*;
-import static item.Item.*;
+import basicClass.*;
+import static basicClass.Item.*;
 
 public class ItemGenerator {
     private ItemGenerator(){};

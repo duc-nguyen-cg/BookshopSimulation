@@ -1,6 +1,6 @@
-package item;
+package basicClass;
 
-import inputCheck.InputChecker;
+import inputChecker.InputChecker;
 
 public abstract class Document extends Item{
     private String publisher;

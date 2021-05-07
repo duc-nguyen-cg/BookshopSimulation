@@ -1,6 +1,6 @@
 package IOTask;
 
-import item.*;
+import basicClass.*;
 import java.io.*;
 import java.util.*;
 

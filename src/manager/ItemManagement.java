@@ -1,13 +1,13 @@
-package itemManagement;
+package manager;
 
 import IOTask.*;
-import inputCheck.InputChecker;
-import item.*;
+import inputChecker.InputChecker;
+import basicClass.*;
 
 import java.util.*;
 import static IOTask.BinaryFileTask.BINARY_FILEPATH_REGEX;
 import static IOTask.CSVFileTask.CSV_FILEPATH_REGEX;
-import static item.Item.*;
+import static basicClass.Item.*;
 
 public class ItemManagement {
     public static final String EMPTY_MESSAGE = "The list is empty!";

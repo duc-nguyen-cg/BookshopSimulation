@@ -1,6 +1,6 @@
-package item;
+package basicClass;
 
-import inputCheck.InputChecker;
+import inputChecker.InputChecker;
 
 import java.io.Serializable;
 

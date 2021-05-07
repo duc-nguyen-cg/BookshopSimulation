@@ -1,35 +1,37 @@
-import item.InputChecker;
+import inputChecker.InputChecker;
+import manager.*;
 
 public class Main {
     public static void main(String[] args) {
+        //init manager and add observers
         ItemManagement itemManager = ItemManagement.getInstance();
-        int userChoice;
+        new BookList(itemManager);
+        new MagazineList(itemManager);
+        new NewspaperList(itemManager);
+        new StationeryList(itemManager);
 
+        //run
+        int userChoice;
         do {
             printMenu();
-            userChoice = InputChecker.inputIntegerInBounds(0, 7);
+            userChoice = InputChecker.inputIntegerInBounds(0, 8);
             switch (userChoice){
                 case 1:
-                    itemManager.display();
-                    break;
+                    itemManager.display(); break;
                 case 2:
-                    itemManager.add();
-                    break;
+                    itemManager.add(); break;
                 case 3:
-                    itemManager.removeByID();
-                    break;
+                    itemManager.removeByID(); break;
                 case 4:
-                    itemManager.searchByID();
-                    break;
+                    itemManager.edit(); break;
                 case 5:
-                    itemManager.sort();
-                    break;
+                    itemManager.searchByID(); break;
                 case 6:
-                    itemManager.exportData();
-                    break;
+                    itemManager.sort(); break;
                 case 7:
-                    itemManager.importData();
-                    break;
+                    itemManager.exportData(); break;
+                case 8:
+                    itemManager.importData(); break;
                 case 0:
                     System.exit(0);
             }
@@ -38,14 +40,20 @@ public class Main {
 
 
     public static void printMenu(){
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            System.err.println("Interrupted!");
+        }
         System.out.println("\nMenu: ");
-        System.out.println("1. Display all items");
-        System.out.println("2. Add a new item");
+        System.out.println("1. Display items");
+        System.out.println("2. Add an item");
         System.out.println("3. Remove an item");
-        System.out.println("4. Search an item by ID");
-        System.out.println("5. Sort");
-        System.out.println("6. Export data");
-        System.out.println("7. Import data");
+        System.out.println("4. Edit an item");
+        System.out.println("5. Search an item by ID");
+        System.out.println("6. Sort");
+        System.out.println("7. Export data");
+        System.out.println("8. Import data");
         System.out.println("0. Exit");
         System.out.println("Enter your choice: ");
     }

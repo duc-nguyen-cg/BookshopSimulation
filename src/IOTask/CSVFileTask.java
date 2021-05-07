@@ -1,6 +1,6 @@
 package IOTask;
 
-import item.*;
+import basicClass.*;
 import java.io.*;
 import java.util.*;
 
@@ -83,7 +83,7 @@ public class CSVFileTask implements IOTaskWithItem{
                 int quantity = Integer.parseInt(row[QUANTITY_COL].trim());
                 double price = Double.parseDouble(row[PRICE_COL].trim());
 
-                if (id.matches("^D1[0-9]{3}$")){
+                if (id.matches("^D1(.*?)$")){
                     String publisher = row[PUBLISHER_COL].trim();
                     String author = row[AUTHOR_COL].trim();
                     int pageNum = Integer.parseInt(row[PAGE_NUM_COL].trim());
@@ -92,20 +92,20 @@ public class CSVFileTask implements IOTaskWithItem{
                     newItem = new Book(name, quantity, price, publisher, author, pageNum, category);
                     newItem.setId(id);
 
-                } else if (id.matches("^D2[0-9]{3}$")){
+                } else if (id.matches("^D2(.*?)$")){
                     String publisher = row[PUBLISHER_COL].trim();
                     int no = Integer.parseInt(row[NO_COL].trim());
                     String month = row[MONTH_COL].trim();
 
                     newItem = new Magazine(name, quantity, price, publisher, no, month);
                     newItem.setId(id);
-                } else if (id.matches("^D3[0-9]{3}$")){
+                } else if (id.matches("^D3(.*?)$")){
                     String publisher = row[PUBLISHER_COL].trim();
                     String date = row[DATE_COL].trim();
 
                     newItem = new Newspaper(name, quantity, price, publisher, date);
                     newItem.setId(id);
-                } else if (id.matches("^S[0-9]{3}$")){
+                } else if (id.matches("^S(.*?)$")){
                     String producer = row[PRODUCER_COL].trim();
                     String type = row[TYPE_COL].trim();
 
