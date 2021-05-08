@@ -1,16 +1,10 @@
 import inputChecker.InputChecker;
-import manager.*;
+import management.*;
 
 public class Main {
     public static void main(String[] args) {
-        //init manager and add observers
         ItemManagement itemManager = ItemManagement.getInstance();
-        new BookList(itemManager);
-        new MagazineList(itemManager);
-        new NewspaperList(itemManager);
-        new StationeryList(itemManager);
 
-        //run
         int userChoice;
         do {
             printMenu();

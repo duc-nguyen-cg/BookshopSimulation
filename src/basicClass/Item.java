@@ -11,7 +11,8 @@ public abstract class Item implements Serializable {
             , MIN_PAGE_NUM = 1, MAX_PAGE_NUM = Integer.MAX_VALUE
             , MIN_NO = 1, MAX_NO = Integer.MAX_VALUE;
     public static final double MIN_PRICE = 0.1, MAX_PRICE = Double.MAX_VALUE;
-    public static final String BOOK_ID = "D1", MAGAZINE_ID = "D2", NEWSPAPER_ID = "D3", STATIONERY_ID = "S";
+    public static final String BOOK_ID = "D1", MAGAZINE_ID = "D2", NEWSPAPER_ID = "D3", STATIONERY_ID = "S"
+            , BOOK_ID_REGEX = "^D1(.*?)$", MAGAZINE_ID_REGEX = "^D2(.*?)$", NEWSPAPER_ID_REGEX = "^D3(.*?)$", STATIONERY_ID_REGEX = "^S(.*?)$" ;
 
     private String id = "", name;
     private int quantity;

@@ -1,0 +1,8 @@
+ID, Name, Quantity, Price, Publisher, Author, Number of pages, Category, No, Released Month, Released Date, Producer, Type
+D2233,Newsweek,56,2.5,Graham Holdings, , , ,2,1-Mar
+D2348,Psychology Today,10,3.4,American Science, , , ,74,1-May
+D2599,Forbes,25,10.6,Forbes, , , ,158,1-Dec
+D2700,Time,70,20.55,Time Warner, , , ,62,1-Jul
+D2786,National Geographic,48,4.8,Smithsonian, , , ,1,1-Mar
+D2813,The WatchTower,68,6.7,Jehovaism, , , ,70,1-Jul
+D2828,Bloomberg,39,17.0,Bloomberg Corp, , , ,328,1-Mar

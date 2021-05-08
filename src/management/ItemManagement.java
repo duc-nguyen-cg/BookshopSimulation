@@ -1,16 +1,18 @@
-package manager;
+package management;
 
 import IOTask.*;
 import inputChecker.InputChecker;
 import basicClass.*;
-
+import management.observer.*;
 import java.util.*;
+
 import static IOTask.BinaryFileTask.BINARY_FILEPATH_REGEX;
 import static IOTask.CSVFileTask.CSV_FILEPATH_REGEX;
 import static basicClass.Item.*;
 
 public class ItemManagement {
-    public static final String EMPTY_MESSAGE = "The bookshop is empty!";
+    public static final String EMPTY_MESSAGE = "Empty!";
+    public static final String NOT_FOUND_MESSAGE = "Not found!";
     private static Scanner scanner = new Scanner(System.in);
 
     private List<Item> itemList = new ArrayList<>();
@@ -18,20 +20,36 @@ public class ItemManagement {
 
     //set up singleton
     private static final ItemManagement itemManager = new ItemManagement();
+
     private ItemManagement() {}
+
     public static ItemManagement getInstance(){
+        itemManager.attach(new BookList());
+        itemManager.attach(new MagazineList());
+        itemManager.attach(new NewspaperList());
+        itemManager.attach(new StationeryList());
         return itemManager;
     }
 
 
     //set up observers
     private List<SubItemList> observers = new ArrayList<>();
-    public void addObserver(SubItemList o){
-        observers.add(o);
+
+    private void attach(SubItemList o){
+        if (!observers.contains(o)){
+            observers.add(o);
+        }
     }
+
+    private void detach(SubItemList o){
+        if (observers.contains(o)){
+            observers.remove(o);
+        }
+    }
+
     private void update(){
         for (SubItemList observer: observers){
-            observer.update();
+            observer.update(itemManager);
         }
     }
 
@@ -56,13 +74,13 @@ public class ItemManagement {
 
         switch (choice){
             case 0:
-                observers.get(0).print(); break;
+                print(observers.get(0).getSubList()); break;
             case 1:
-                observers.get(1).print(); break;
+                print(observers.get(1).getSubList()); break;
             case 2:
-                observers.get(2).print(); break;
+                print(observers.get(2).getSubList()); break;
             case 3:
-                observers.get(3).print(); break;
+                print(observers.get(3).getSubList()); break;
             case 4:
                 print(itemList); break;
         }
@@ -85,11 +103,10 @@ public class ItemManagement {
         }
         newItem.setId(commonID + uniqueID);
 
-        //add and re-sort the list by ID (default)
-        System.out.println("Added '"+ newItem +"' successfully!");
+        //add and inform
         itemList.add(newItem);
-        itemList.sort(Comparator.comparing(Item::getId));
         update();
+        System.out.println("Added '"+ newItem +"' successfully!");
     }
 
 
@@ -103,7 +120,7 @@ public class ItemManagement {
         String removeID = scanner.nextLine();
         Item removeItem = binarySearch(itemList, removeID);
         if (removeItem == null){
-            System.err.println("Not found!");
+            System.err.println(NOT_FOUND_MESSAGE);
         } else {
             itemList.remove(removeItem);
             System.out.println("Removed '"+ removeItem+ "' successfully!");
@@ -118,7 +135,7 @@ public class ItemManagement {
             System.err.println(EMPTY_MESSAGE);
             return;
         }
-        System.out.println("Enter ID: ");
+        System.out.println("Enter ID to edit: ");
         String editID = scanner.nextLine();
         Item editItem = binarySearch(itemList, editID);
         if (editItem == null){
@@ -148,13 +165,23 @@ public class ItemManagement {
     private void searchByID(){
         System.out.println("Enter ID to search: ");
         String searchID = scanner.nextLine();
-        //add a switch case here
-        //
-        //
-        //
-        Item searchItem = binarySearch(itemList, searchID);
+        List<Item> targetList;
+        if (searchID.matches(BOOK_ID_REGEX)){
+            targetList = observers.get(0).getSubList();
+        } else if (searchID.matches(MAGAZINE_ID_REGEX)){
+            targetList = observers.get(1).getSubList();
+        } else if (searchID.matches(NEWSPAPER_ID_REGEX)){
+            targetList = observers.get(2).getSubList();
+        } else if (searchID.matches(STATIONERY_ID_REGEX)){
+            targetList = observers.get(3).getSubList();
+        } else {
+            System.err.println(NOT_FOUND_MESSAGE);
+            return;
+        }
+
+        Item searchItem = binarySearch(targetList, searchID);
         if (searchItem == null){
-            System.err.println("Not found!");
+            System.err.println(NOT_FOUND_MESSAGE);
         } else {
             System.out.println(searchItem);
         }
@@ -187,22 +214,21 @@ public class ItemManagement {
             System.err.println(EMPTY_MESSAGE);
             return;
         }
+
         System.out.println("Sort by: 0.ID (default)   1.Name   2.Quantity   3.Price ");
         int choice = InputChecker.inputIntegerInBounds(0,3);
-        List<Item> newList = new ArrayList<>(itemList);
         switch (choice){
             case 0:
-                newList.sort(Comparator.comparing(Item::getId));
-                itemList = new ArrayList<>(newList);
-                break;
+                itemList.sort(Comparator.comparing(Item::getId)); break;
             case 1:
-                newList.sort(Comparator.comparing(Item::getName)); break;
+                itemList.sort(Comparator.comparing(Item::getName)); break;
             case 2:
-                newList.sort(Comparator.comparing(Item::getQuantity)); break;
+                itemList.sort(Comparator.comparing(Item::getQuantity)); break;
             case 3:
-                newList.sort(Comparator.comparing(Item::getPrice)); break;
+                itemList.sort(Comparator.comparing(Item::getPrice)); break;
         }
-        print(newList);
+        print(itemList);
+        update();
     }
 
 
@@ -212,10 +238,27 @@ public class ItemManagement {
             System.err.println(EMPTY_MESSAGE);
             return;
         }
+        //choose list to export
+        List<Item> exportedList = null;
+        System.out.println("Choose list to export:   0.Book  1.Magazine  2.Newspaper  3.Stationery  4.All");
+        int listChoice = InputChecker.inputIntegerInBounds(0,4);
+        switch (listChoice){
+            case 0:
+                exportedList = observers.get(0).getSubList(); break;
+            case 1:
+                exportedList = observers.get(1).getSubList(); break;
+            case 2:
+                exportedList = observers.get(2).getSubList(); break;
+            case 3:
+                exportedList = observers.get(3).getSubList(); break;
+            case 4:
+                exportedList = itemList;
+        }
+
+        //choose filetype, set up writer
         IOTaskWithItem writer;
         String dest;
-
-        System.out.println("Choose type of dest:  1.Binary  2.CSV");
+        System.out.println("Choose type of file:  1.Binary  2.CSV");
         int choice = InputChecker.inputIntegerInBounds(1,2);
         if (choice == 1){
             System.out.println("Enter output filepath ends with .txt: ");
@@ -226,7 +269,7 @@ public class ItemManagement {
             dest = InputChecker.inputString(CSV_FILEPATH_REGEX);
             writer = CSVFileTask.getInstance();
         }
-        writer.write(itemList, dest);
+        writer.write(exportedList, dest);
     }
 
 
@@ -253,7 +296,7 @@ public class ItemManagement {
 
     //clear all data
     public void clearAll(){
-        System.out.println("Are you sure?     1.Continue   0.Cancel");
+        System.err.println("Are you sure?     1.Continue   0.Cancel");
         int choice = InputChecker.inputIntegerInBounds(0, 1);
         if (choice == 1) {
             itemList.clear();

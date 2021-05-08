@@ -1,8 +1,12 @@
 package IOTask;
 
 import basicClass.*;
+import jdk.internal.util.xml.impl.Input;
+
 import java.io.*;
 import java.util.*;
+
+import static basicClass.Item.*;
 
 //impossible to clean code lol
 
@@ -83,32 +87,30 @@ public class CSVFileTask implements IOTaskWithItem{
                 int quantity = Integer.parseInt(row[QUANTITY_COL].trim());
                 double price = Double.parseDouble(row[PRICE_COL].trim());
 
-                if (id.matches("^D1(.*?)$")){
+                if (id.matches(BOOK_ID_REGEX)){
                     String publisher = row[PUBLISHER_COL].trim();
                     String author = row[AUTHOR_COL].trim();
                     int pageNum = Integer.parseInt(row[PAGE_NUM_COL].trim());
                     String category = row[CATEGORY_COL].trim();
-
                     newItem = new Book(name, quantity, price, publisher, author, pageNum, category);
                     newItem.setId(id);
 
-                } else if (id.matches("^D2(.*?)$")){
+                } else if (id.matches(MAGAZINE_ID_REGEX)){
                     String publisher = row[PUBLISHER_COL].trim();
                     int no = Integer.parseInt(row[NO_COL].trim());
                     String month = row[MONTH_COL].trim();
-
                     newItem = new Magazine(name, quantity, price, publisher, no, month);
                     newItem.setId(id);
-                } else if (id.matches("^D3(.*?)$")){
+
+                } else if (id.matches(NEWSPAPER_ID_REGEX)){
                     String publisher = row[PUBLISHER_COL].trim();
                     String date = row[DATE_COL].trim();
-
                     newItem = new Newspaper(name, quantity, price, publisher, date);
                     newItem.setId(id);
-                } else if (id.matches("^S(.*?)$")){
+
+                } else if (id.matches(STATIONERY_ID_REGEX)){
                     String producer = row[PRODUCER_COL].trim();
                     String type = row[TYPE_COL].trim();
-
                     newItem = new Stationery(name, quantity, price, producer, type);
                     newItem.setId(id);
                 }
@@ -120,7 +122,7 @@ public class CSVFileTask implements IOTaskWithItem{
             originalList.addAll(newList);
             reader.close();
             System.out.println("Import data from "+filepath+" successfully!");
-        } catch (IOException e){
+        } catch (IOException | InputMismatchException e){
             System.err.println(FILE_ERROR_MESSAGE);
         }
         return originalList;

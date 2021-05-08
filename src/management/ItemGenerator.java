@@ -1,4 +1,4 @@
-package manager;
+package management;
 
 import basicClass.*;
 import static basicClass.Item.*;

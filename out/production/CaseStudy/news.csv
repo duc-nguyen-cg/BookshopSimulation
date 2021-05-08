@@ -1,0 +1,9 @@
+ID, Name, Quantity, Price, Publisher, Author, Number of pages, Category, No, Released Month, Released Date, Producer, Type
+D3027,The Wall Street Journal,50,2.99,New York, , , , , ,7/7/1992
+D3189,The New York Times,340,3.4,New York, , , , , ,1/1/1900
+D3251,test,10,10.0,test, , , , , ,1/1/1111
+D3321,Washington Post,407,1.06,Washington, , , , , ,2/2/1913
+D3345,The Guardian,289,2.055,London, , , , , ,3/12/2008
+D3510,USA Today,568,4.8,New York, , , , , ,9/21/2001
+D3824,Nikkei,747,6.7,Tokyo, , , , , ,6/6/1940
+D3911,Chicago Tribune,666,1.7,Chicago, , , , , ,9/1/1945

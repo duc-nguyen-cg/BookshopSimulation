@@ -1,0 +1,8 @@
+ID, Name, Quantity, Price, Publisher, Author, Number of pages, Category, No, Released Month, Released Date, Producer, Type
+D1152,86,100,20.69,Kadokawa,Asato Asato,150,Mecha,Book
+D1207,1984,10,5.2,Signet Press,Georger Orwell,100,Dystopia,Book
+D1318,Attack on Titan,250,139.5,Kodansha,Isayama Hajime,80,Politic-Fantasy,Book
+D1592,Pride and Prejudice,700,258.4,Routledge,Jane Austen,2200,Literature,Book
+D1681,The Laughing Man,40,75.67,Springer,Victor Hugo,1008,Literature,Book
+D1725,Biology,68,9.98,Elsevier,John Campbell,418,Science,Book
+D1996,Cambrige Dictionary,99,7.99,Cambrige University Press,V.A.,200,Language,Book
