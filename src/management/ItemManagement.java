@@ -69,21 +69,8 @@ public class ItemManagement {
 
     //print items by type
     public void display(){
-        System.out.println("Enter list to display: 0.Book  1.Magazine  2.Newspaper  3.Stationery  4.All");
-        int choice = InputChecker.inputIntegerInBounds(0,4);
-
-        switch (choice){
-            case 0:
-                print(observers.get(0).getSubList()); break;
-            case 1:
-                print(observers.get(1).getSubList()); break;
-            case 2:
-                print(observers.get(2).getSubList()); break;
-            case 3:
-                print(observers.get(3).getSubList()); break;
-            case 4:
-                print(itemList); break;
-        }
+        List<Item> chosenList = chooseDataList();
+        print(chosenList);
     }
 
 
@@ -103,10 +90,11 @@ public class ItemManagement {
         }
         newItem.setId(commonID + uniqueID);
 
-        //add and inform
+        //add, sort by ID and inform
         itemList.add(newItem);
-        update();
+        itemList.sort(Comparator.comparing(Item::getId));
         System.out.println("Added '"+ newItem +"' successfully!");
+        update();
     }
 
 
@@ -152,7 +140,7 @@ public class ItemManagement {
             System.err.println(EMPTY_MESSAGE);
             return;
         }
-        System.out.println("Search by:  1.ID  2.Name");
+        System.out.println("Search by:   1.ID  2.Name");
         int choice = InputChecker.inputIntegerInBounds(1,2);
         if (choice == 1){
             searchByID();
@@ -165,6 +153,7 @@ public class ItemManagement {
     private void searchByID(){
         System.out.println("Enter ID to search: ");
         String searchID = scanner.nextLine();
+
         List<Item> targetList;
         if (searchID.matches(BOOK_ID_REGEX)){
             targetList = observers.get(0).getSubList();
@@ -178,7 +167,6 @@ public class ItemManagement {
             System.err.println(NOT_FOUND_MESSAGE);
             return;
         }
-
         Item searchItem = binarySearch(targetList, searchID);
         if (searchItem == null){
             System.err.println(NOT_FOUND_MESSAGE);
@@ -190,19 +178,12 @@ public class ItemManagement {
 
     //search by name
     private void searchByName(){
-        System.out.println("Enter one keyword: ");
-        String searchKey = InputChecker.inputString("^ *([a-zA-Z0-9]+) *$");
-        searchKey = searchKey.trim();
-        searchKey = searchKey.toLowerCase();
+        System.out.println("Enter keywords to search: ");
+        String searchKey = InputChecker.inputString(MAX_STRING_LENGTH);
 
         for (Item item: itemList){
-            String[] foundWords = item.getName().split(" ");
-            for (String word: foundWords){
-                word = word.trim();
-                word = word.toLowerCase();
-                if (searchKey.equals(word)){
-                    System.out.println(item);
-                }
+            if (matchWords(item.getName(), searchKey)){
+                System.out.println(item);
             }
         }
     }
@@ -214,21 +195,20 @@ public class ItemManagement {
             System.err.println(EMPTY_MESSAGE);
             return;
         }
-
+        List<Item> chosenList = new ArrayList<>(chooseDataList());
         System.out.println("Sort by: 0.ID (default)   1.Name   2.Quantity   3.Price ");
         int choice = InputChecker.inputIntegerInBounds(0,3);
         switch (choice){
             case 0:
-                itemList.sort(Comparator.comparing(Item::getId)); break;
+                chosenList.sort(Comparator.comparing(Item::getId)); break;
             case 1:
-                itemList.sort(Comparator.comparing(Item::getName)); break;
+                chosenList.sort(Comparator.comparing(Item::getName)); break;
             case 2:
-                itemList.sort(Comparator.comparing(Item::getQuantity)); break;
+                chosenList.sort(Comparator.comparing(Item::getQuantity)); break;
             case 3:
-                itemList.sort(Comparator.comparing(Item::getPrice)); break;
+                chosenList.sort(Comparator.comparing(Item::getPrice)); break;
         }
-        print(itemList);
-        update();
+        print(chosenList);
     }
 
 
@@ -239,21 +219,7 @@ public class ItemManagement {
             return;
         }
         //choose list to export
-        List<Item> exportedList = null;
-        System.out.println("Choose list to export:   0.Book  1.Magazine  2.Newspaper  3.Stationery  4.All");
-        int listChoice = InputChecker.inputIntegerInBounds(0,4);
-        switch (listChoice){
-            case 0:
-                exportedList = observers.get(0).getSubList(); break;
-            case 1:
-                exportedList = observers.get(1).getSubList(); break;
-            case 2:
-                exportedList = observers.get(2).getSubList(); break;
-            case 3:
-                exportedList = observers.get(3).getSubList(); break;
-            case 4:
-                exportedList = itemList;
-        }
+        List<Item> exportedList = chooseDataList();
 
         //choose filetype, set up writer
         IOTaskWithItem writer;
@@ -305,6 +271,40 @@ public class ItemManagement {
         update();
     }
 
+
+    
+    private boolean matchWords(String target, String key){
+        String[] keyWords = key.split(" ");
+        String[] targetWords = target.split(" ");
+
+        for (String targetWord: targetWords){
+            for (String keyWord: keyWords){
+                if ((targetWord.trim().toLowerCase()).equals(keyWord.trim().toLowerCase())){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+
+    private List<Item> chooseDataList(){
+        System.out.println("Enter list to display: 0.Book  1.Magazine  2.Newspaper  3.Stationery  4.All");
+        int choice = InputChecker.inputIntegerInBounds(0,4);
+        switch (choice){
+            case 0:
+                return observers.get(0).getSubList();
+            case 1:
+                return observers.get(1).getSubList();
+            case 2:
+                return observers.get(2).getSubList();
+            case 3:
+                return observers.get(3).getSubList();
+            case 4:
+                return itemList;
+        }
+        return null;
+    }
 
 
 
@@ -361,4 +361,6 @@ public class ItemManagement {
         }
         System.out.println();
     }
+
 }
+
