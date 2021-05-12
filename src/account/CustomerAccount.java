@@ -6,35 +6,17 @@ import management.ItemManagement;
 import java.util.*;
 
 
-public class CustomerAccount {
+public class CustomerAccount extends Account{
     private ItemManagement manager;
-    private String accountName;
-    private String password;
     private List<Item> cart = new ArrayList<>();
 
     public CustomerAccount() {
     }
 
-    public CustomerAccount(ItemManagement manager) {
+    public CustomerAccount(ItemManagement manager, String accountName, String password) {
+        super(accountName, password);
         this.manager = manager;
     }
-
-    public String getAccountName() {
-        return accountName;
-    }
-
-    public void setAccountName(String accountName) {
-        this.accountName = accountName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
 
     private void showCart(){
 
@@ -67,9 +49,6 @@ public class CustomerAccount {
     private void buy(){
         //find and check quantity left
         List<Item> found = manager.searchByID();
-        if (found == null){
-            return;
-        }
         Item foundItem = found.get(0);
         if (foundItem == null ){
             System.err.println("Not found!");
@@ -86,9 +65,6 @@ public class CustomerAccount {
         do {
             System.out.println("Enter how many you want to buy: ");
             number = InputChecker.inputIntegerInBounds(1, left);
-            if (number > left){
-                System.out.println("Oops, this item has limited number!");
-            }
         } while (number > left);
 
         //add to cart, change the quantity
@@ -104,6 +80,10 @@ public class CustomerAccount {
 
 
     public void run(){
+        if (login() == false){
+            return;
+        }
+
         int userChoice;
         do {
             printMenu();

@@ -158,7 +158,7 @@ public class ItemManagement {
 
         System.out.println("Enter ID to search: ");
         String searchID = scanner.nextLine();
-        List<Item> targetList;
+        List<Item> targetList = new ArrayList<>();
         if (searchID.matches(BOOK_ID_REGEX)){
             targetList = observers.get(0).getSubList();
         } else if (searchID.matches(MAGAZINE_ID_REGEX)){
@@ -169,7 +169,7 @@ public class ItemManagement {
             targetList = observers.get(3).getSubList();
         } else {
             System.err.println(NOT_FOUND_MESSAGE);
-            return null;
+            found.add(null);
         }
 
         Item foundItem = binarySearch(targetList, searchID);

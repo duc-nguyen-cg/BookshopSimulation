@@ -3,32 +3,15 @@ package account;
 import inputChecker.InputChecker;
 import management.ItemManagement;
 
-public class RetailerAccount {
+public class RetailerAccount extends Account{
     private ItemManagement manager;
-    private String accountName;
-    private String password;
 
     public RetailerAccount() {
     }
 
-    public RetailerAccount(ItemManagement manager) {
+    public RetailerAccount(ItemManagement manager, String accountName, String password) {
+        super(accountName, password);
         this.manager = manager;
-    }
-
-    public String getAccountName() {
-        return accountName;
-    }
-
-    public void setAccountName(String accountName) {
-        this.accountName = accountName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
 
@@ -80,6 +63,9 @@ public class RetailerAccount {
     }
 
     public void run(){
+        if (login() == false){
+            return;
+        }
         int managerChoice;
         do {
             printMenu();
