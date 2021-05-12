@@ -1,9 +1,9 @@
-package management;
+package item_management;
 
 import IOTask.*;
 import inputChecker.InputChecker;
 import basicClass.*;
-import management.observer.*;
+import item_management.observer.*;
 import java.util.*;
 
 import static IOTask.BinaryFileTask.BINARY_FILEPATH_REGEX;

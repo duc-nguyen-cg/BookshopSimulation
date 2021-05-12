@@ -1,17 +1,17 @@
-package management.observer;
+package item_management.observer;
 
 import basicClass.*;
-import management.ItemManagement;
+import item_management.ItemManagement;
 
-public class BookList extends SubItemList {
+public class NewspaperList extends SubItemList {
 
-    public BookList(){}
+    public NewspaperList(){}
 
     @Override
     public void update(ItemManagement itemManagement){
         result.clear();
         for (Item item: itemManagement.getItemList()){
-            if (item instanceof Book){
+            if (item instanceof Newspaper){
                 result.add(item);
             }
         }

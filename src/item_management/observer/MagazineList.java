@@ -1,7 +1,7 @@
-package management.observer;
+package item_management.observer;
 
 import basicClass.*;
-import management.ItemManagement;
+import item_management.ItemManagement;
 
 public class MagazineList extends SubItemList {
 

@@ -2,7 +2,7 @@ import account.Account;
 import account.CustomerAccount;
 import account.RetailerAccount;
 import inputChecker.InputChecker;
-import management.*;
+import item_management.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ public class Main {
     //print menus
     private static void printHomeScreen(){
         sleep();
-        System.out.println("\nChoose your role: ");
+        System.out.println("\nChoose your account: ");
         System.out.println("1. Retailer");
         System.out.println("2. Customer 1");
         System.out.println("3. Customer 2");
@@ -25,6 +25,7 @@ public class Main {
         System.out.println("\nLog-in Screen: ");
         System.out.println("1. Log in");
         System.out.println("0. Return");
+        System.out.println("Enter your choice: ");
     }
 
     private static void sleep(){
@@ -57,32 +58,25 @@ public class Main {
             case 1:
                 account.run();
             case 0:
-                run(accounts);
+                runAll(accounts);
         }
     }
 
-    private static void run(List<Account> accounts){
+    private static void runAll(List<Account> accounts){
         int role;
         do {
             printHomeScreen();
-            role = InputChecker.inputIntegerInBounds(0,3);
-            switch (role){
-                case 1:
-                    runAccount(accounts, accounts.get(0));
-                case 2:
-                    runAccount(accounts, accounts.get(1));
-                case 3:
-                    runAccount(accounts, accounts.get(2));
-                case 0:
-                    System.exit(0);
+            role = InputChecker.inputIntegerInBounds(0,accounts.size());
+            if (role == 0){
+                System.exit(0);
             }
+            runAccount(accounts, accounts.get(role-1));
         } while (role != 0);
     }
 
 
-
     public static void main(String[] args) {
         List<Account> accounts = init();
-        run(accounts);
+        runAll(accounts);
     }
 }

@@ -5,6 +5,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 public class InputChecker {
     private static final String INPUT_ERROR_MESSAGE = "Invalid input, please enter again: ";
 
@@ -81,6 +82,24 @@ public class InputChecker {
     }
 
 
+    public static String inputString(String regex, String description){
+        String str;
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher;
+        boolean isValid;
+        do {
+            str = scanner.nextLine();
+            str = str.trim();
+            matcher = pattern.matcher(str);
+            isValid = matcher.matches();
+            if (!isValid){
+                System.err.println(INPUT_ERROR_MESSAGE+ description);
+            }
+        } while (!isValid);
+        return str;
+    }
+
+
     public static String inputDate(){
         String str;
         Pattern pattern = Pattern.compile(DATE_REGEX);
@@ -113,5 +132,6 @@ public class InputChecker {
         } while (!isMonth);
         return str;
     }
+
 
 }

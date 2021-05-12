@@ -1,4 +1,4 @@
-package management;
+package item_management;
 
 import basicClass.*;
 import static basicClass.Item.*;

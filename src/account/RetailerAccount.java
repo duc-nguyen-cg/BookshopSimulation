@@ -1,13 +1,15 @@
 package account;
 
 import inputChecker.InputChecker;
-import management.ItemManagement;
+import item_management.ItemManagement;
 
 public class RetailerAccount extends Account{
     private ItemManagement manager;
 
-    public RetailerAccount() {
+    public RetailerAccount(ItemManagement manager) {
+        this.manager = manager;
     }
+
 
     public RetailerAccount(ItemManagement manager, String accountName, String password) {
         super(accountName, password);
@@ -19,11 +21,9 @@ public class RetailerAccount extends Account{
         manager.display();
     }
 
-
     private void add(){
         manager.add();
     }
-
 
     private void remove(){
         manager.removeByID();
@@ -37,84 +37,76 @@ public class RetailerAccount extends Account{
         manager.search();
     }
 
-
     private void sort(){
         manager.sort();
     }
-
 
     private void exportData(){
         manager.exportData();
     }
 
-
     private void importData(){
         manager.importData();
     }
-
 
     private void clearAll(){
         manager.clearAll();
     }
 
-
     private void checkProfit() {
         System.out.println("The current profit is "+manager.getProfit()+" dollars");
     }
 
+
+    @Override
     public void run(){
         if (login() == false){
             return;
         }
+
         int managerChoice;
         do {
             printMenu();
-            managerChoice = InputChecker.inputIntegerInBounds(0, 10);
+            managerChoice = InputChecker.inputIntegerInBounds(0, 12);
             switch (managerChoice) {
                 case 1:
-                    view();
-                    break;
+                    view(); break;
                 case 2:
-                    add();
-                    break;
+                    add(); break;
                 case 3:
-                    remove();
-                    break;
+                    remove(); break;
                 case 4:
-                    edit();
-                    break;
+                    edit(); break;
                 case 5:
-                    search();
-                    break;
+                    search(); break;
                 case 6:
-                    sort();
-                    break;
+                    sort(); break;
                 case 7:
-                    exportData();
-                    break;
+                    exportData(); break;
                 case 8:
-                    importData();
-                    break;
+                    importData(); break;
                 case 9:
-                    clearAll();
-                    break;
+                    clearAll(); break;
                 case 10:
-                    checkProfit();
-                    break;
+                    checkProfit(); break;
+                case 11:
+                    changeAccountName(); break;
+                case 12:
+                    changePassWord(); break;
                 case 0:
-                    System.err.println("The retailer logged out!");
+                    System.err.println(LOG_OUT_MESSAGE);
             }
         } while (managerChoice != 0);
     }
 
 
-    public static void printMenu(){
+    public void printMenu(){
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
             System.err.println("Interrupted!");
         }
-        System.out.println("\nRetailer's Task: ");
+        System.out.println("\n  "+getAccountName()+"'s Account");
         System.out.println("1. Display items");
         System.out.println("2. Add");
         System.out.println("3. Remove");
@@ -125,7 +117,10 @@ public class RetailerAccount extends Account{
         System.out.println("8. Import data");
         System.out.println("9. Clear all data");
         System.out.println("10. Check the profit");
+        System.out.println("11. Change account name");
+        System.out.println("12. Change password");
         System.out.println("0. Log out");
-        System.out.println("Enter manager's choice: ");
+        System.out.println("Enter retailer's choice: ");
     }
+
 }
