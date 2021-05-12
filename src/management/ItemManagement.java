@@ -16,7 +16,7 @@ public class ItemManagement {
     private static Scanner scanner = new Scanner(System.in);
 
     private List<Item> itemList = new ArrayList<>();
-
+    private double profit = 0;
 
     //set up singleton
     private static final ItemManagement itemManager = new ItemManagement();
@@ -140,20 +140,24 @@ public class ItemManagement {
             System.err.println(EMPTY_MESSAGE);
             return;
         }
+
+        List<Item> result;
         System.out.println("Search by:   1.ID  2.Name");
         int choice = InputChecker.inputIntegerInBounds(1,2);
         if (choice == 1){
-            searchByID();
+            result = searchByID();
         } else {
-            searchByName();
+            result = searchByName();
         }
+        print(result);
     }
 
     //search an item by ID
-    private void searchByID(){
+    public List<Item> searchByID(){
+        List<Item> found = new ArrayList<>();
+
         System.out.println("Enter ID to search: ");
         String searchID = scanner.nextLine();
-
         List<Item> targetList;
         if (searchID.matches(BOOK_ID_REGEX)){
             targetList = observers.get(0).getSubList();
@@ -165,27 +169,27 @@ public class ItemManagement {
             targetList = observers.get(3).getSubList();
         } else {
             System.err.println(NOT_FOUND_MESSAGE);
-            return;
+            return null;
         }
-        Item searchItem = binarySearch(targetList, searchID);
-        if (searchItem == null){
-            System.err.println(NOT_FOUND_MESSAGE);
-        } else {
-            System.out.println(searchItem);
-        }
+
+        Item foundItem = binarySearch(targetList, searchID);
+        found.add(foundItem);
+        return found;
     }
 
 
     //search by name
-    private void searchByName(){
+    private List<Item> searchByName(){
+        List<Item> found = new ArrayList<>();
         System.out.println("Enter keywords to search: ");
         String searchKey = InputChecker.inputString(MAX_STRING_LENGTH);
 
         for (Item item: itemList){
             if (matchWords(item.getName(), searchKey)){
-                System.out.println(item);
+                found.add(item);
             }
         }
+        return found;
     }
 
 
@@ -272,6 +276,14 @@ public class ItemManagement {
     }
 
 
+    public double getProfit(){
+        return profit;
+    }
+
+
+    public void receivePayment(double payment){
+        profit = profit + payment;
+    }
     
     private boolean matchWords(String target, String key){
         String[] keyWords = key.split(" ");

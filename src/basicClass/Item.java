@@ -4,7 +4,7 @@ import inputChecker.InputChecker;
 
 import java.io.Serializable;
 
-public abstract class Item implements Serializable {
+public abstract class Item implements Serializable, Cloneable {
     public static final int BOOK_CODE = 1, MAGAZINE_CODE = 2, NEWSPAPER_CODE = 3, STATIONERY_CODE = 4
             , MAX_STRING_LENGTH = 30, UNIQUE_ID_LENGTH = 3
             , MIN_QUANTITY = 1, MAX_QUANTITY = Integer.MAX_VALUE
@@ -74,5 +74,15 @@ public abstract class Item implements Serializable {
         quantity = InputChecker.inputIntegerInBounds(MIN_QUANTITY, MAX_QUANTITY);
         System.out.println("Price: ");
         price = InputChecker.inputDoubleInBounds(MIN_PRICE, MAX_PRICE);
+    }
+
+
+    @Override
+    public Item clone() {
+        try {
+            return (Item) super.clone();
+        } catch (CloneNotSupportedException e){
+            return null;
+        }
     }
 }
