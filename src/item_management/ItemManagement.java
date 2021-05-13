@@ -168,8 +168,7 @@ public class ItemManagement {
         } else if (searchID.matches(STATIONERY_ID_REGEX)){
             targetList = observers.get(3).getSubList();
         } else {
-            System.err.println(NOT_FOUND_MESSAGE);
-            found.add(null);
+            found.add(null); return found;
         }
 
         Item foundItem = binarySearch(targetList, searchID);

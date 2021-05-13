@@ -11,7 +11,7 @@ public class CustomerAccount extends Account{
     private static final double MAX_MONEY = 500;
 
     private ItemManagement manager;
-    private List<Item> cart = new ArrayList<>();
+    private Stack<Item> cart = new Stack<>();
     private double wallet = MAX_MONEY;
 
 
@@ -24,16 +24,22 @@ public class CustomerAccount extends Account{
         this.manager = manager;
     }
 
-    private void showCart(){
-
-        if (cart.isEmpty()){
-            System.err.println("Empty!");
+    private void printStack(Stack<Item> stack){
+        if (stack.isEmpty()){
+            return;
         } else {
-            System.out.println("Cart: ");
-            for (Item item: cart){
-                System.out.println(item);
-            }
+            Item item = stack.pop();
+            System.out.println(item);
+            printStack(stack);
+            stack.push(item);
         }
+    }
+
+
+
+    private void showCart(){
+        System.out.println("Cart: ");
+        printStack(cart);
     }
 
 
@@ -68,6 +74,7 @@ public class CustomerAccount extends Account{
             System.err.println("Not available!");
             return;
         }
+        checkAccountBalance();
         if (wallet < foundItem.getPrice()){
             System.err.println("Not enough money!");
             return;
@@ -97,7 +104,7 @@ public class CustomerAccount extends Account{
         manager.receivePayment(clone.getPrice() * clone.getQuantity());
         wallet -= clone.getPrice() * clone.getQuantity();
         System.out.println("Exchange successfully!");
-
+        checkAccountBalance();
     }
 
 
@@ -106,6 +113,9 @@ public class CustomerAccount extends Account{
     }
 
     private void recharge(){
+        if (wallet == MAX_MONEY){
+            System.err.println("No need to recharge!"); return;
+        }
         System.out.println("How much money you want to recharge: ");
         double charged = InputChecker.inputDoubleInBounds(0.1, Double.MAX_VALUE);
         if (wallet + charged > MAX_MONEY){
