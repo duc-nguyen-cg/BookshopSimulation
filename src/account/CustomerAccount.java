@@ -85,8 +85,7 @@ public class CustomerAccount extends Account{
         do {
             do {
                 System.out.println("Enter how many you want to buy: ");
-                number = InputChecker.inputIntegerInBounds(1, Integer.MAX_VALUE);
-
+                number = InputChecker.inputIntegerInBounds(1, left);
             } while (number > left);
             if (wallet < foundItem.getPrice() * number){
                 System.err.println("Not enough money!");
