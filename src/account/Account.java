@@ -89,4 +89,13 @@ public abstract class Account {
         System.out.println("Your password changed!");
     }
 
+
+    public void inputAccountInfo(){
+        System.out.println("Enter account name: ");
+        accountName = InputChecker.inputString(ACCOUNT_NAME_REGEX, ACCOUNT_NAME_RULE);
+        System.out.println("Enter password: ");
+        password = InputChecker.inputString(PASSWORD_REGEX, PASSWORD_RULE);
+    }
+
+
 }

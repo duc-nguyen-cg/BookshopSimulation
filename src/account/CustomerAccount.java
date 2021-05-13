@@ -7,13 +7,13 @@ import java.util.*;
 
 
 public class CustomerAccount extends Account{
-    private static final Scanner scanner = new Scanner(System.in);
     private static final double MAX_MONEY = 500;
+    private static final int MAX_LOYAL_LEVEl = 5, MIN_LOYAL_LEVEL = 1;
 
     private ItemManagement manager;
     private Stack<Item> cart = new Stack<>();
     private double wallet = MAX_MONEY;
-
+    private double totalPaid = 0;
 
     public CustomerAccount(ItemManagement manager) {
         this.manager = manager;
@@ -23,6 +23,28 @@ public class CustomerAccount extends Account{
         super(accountName, password);
         this.manager = manager;
     }
+
+
+    private double getTotalPaid(){ return totalPaid; }
+
+
+    public String getLoyalLevel(){
+        int rawLevel = (int) (totalPaid /MAX_MONEY) ;
+        if (rawLevel > MAX_LOYAL_LEVEl){
+            rawLevel = MAX_LOYAL_LEVEl;
+        } else if (rawLevel < MIN_LOYAL_LEVEL){
+            rawLevel = MIN_LOYAL_LEVEL;
+        }
+
+        String result = "";
+        for (int i = 0; i < rawLevel; i++){
+            result += "*";
+        }
+        return result;
+    }
+
+
+
 
     private void printStack(Stack<Item> stack){
         if (stack.isEmpty()){
@@ -100,15 +122,17 @@ public class CustomerAccount extends Account{
         cart.add(clone);
 
         //pay and inform
-        manager.receivePayment(clone.getPrice() * clone.getQuantity());
-        wallet -= clone.getPrice() * clone.getQuantity();
+        double paid = clone.getPrice() * clone.getQuantity();
+        manager.receivePayment(paid);
+        wallet -= paid;
+        totalPaid += paid;
         System.out.println("Exchange successfully!");
         checkAccountBalance();
     }
 
 
     private void checkAccountBalance(){
-        System.out.printf("You have %.2f dollar(s)\n", wallet);
+        System.out.printf("\nYou have %.2f dollar(s)\n", wallet);
     }
 
     private void recharge(){
@@ -123,6 +147,22 @@ public class CustomerAccount extends Account{
             wallet += charged;
         }
         checkAccountBalance();
+
+    }
+
+
+    @Override
+    public String toString(){
+        return getAccountName() + "\t\t\t" + getLoyalLevel();
+    }
+
+
+    private void showAccountInfo(){
+        System.out.println("\nAccount Name: \t "+ getAccountName());
+        System.out.println("Password: \t\t "+ getPassword());
+        System.out.printf("Account Balance: %.2f dollar(s)\n", wallet);
+        System.out.printf("Total Payment: \t %.2f dollar(s)\n", totalPaid);
+        System.out.println("Loyal Customer:  "+getLoyalLevel());
     }
 
 
@@ -135,7 +175,7 @@ public class CustomerAccount extends Account{
         int userChoice;
         do {
             printMenu();
-            userChoice = InputChecker.inputIntegerInBounds(0, 9);
+            userChoice = InputChecker.inputIntegerInBounds(0, 10);
             switch (userChoice){
                 case 1:
                     view(); break;
@@ -155,6 +195,8 @@ public class CustomerAccount extends Account{
                     changeAccountName(); break;
                 case 9:
                     changePassWord(); break;
+                case 10:
+                    showAccountInfo(); break;
                 case 0:
                     System.err.println(LOG_OUT_MESSAGE);
             }
@@ -178,6 +220,7 @@ public class CustomerAccount extends Account{
         System.out.println("7. Recharge");
         System.out.println("8. Change account name");
         System.out.println("9. Change password");
+        System.out.println("10. Show account info");
         System.out.println("0. Log out");
         System.out.println("Enter customer's choice: ");
     }
