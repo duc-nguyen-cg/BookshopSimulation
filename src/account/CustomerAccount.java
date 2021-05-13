@@ -61,12 +61,17 @@ public class CustomerAccount extends Account{
             System.err.println("Not found!");
             return;
         }
-        int left = found.get(0).getQuantity();
+        System.out.println(foundItem);
+
+        int left = foundItem.getQuantity();
         if (left == 0){
             System.err.println("Not available!");
             return;
         }
-        System.out.println(foundItem);
+        if (wallet < foundItem.getPrice()){
+            System.err.println("Not enough money!");
+            return;
+        }
 
         //enter amount to buy
         int number;
