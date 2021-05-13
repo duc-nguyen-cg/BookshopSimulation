@@ -2,7 +2,7 @@ package account;
 
 import basicClass.*;
 import inputChecker.InputChecker;
-import item_management.ItemManagement;
+import management.ItemManagement;
 import java.util.*;
 
 
@@ -14,6 +14,8 @@ public class CustomerAccount extends Account{
     private Stack<Item> cart = new Stack<>();
     private double wallet = MAX_MONEY;
     private double totalPaid = 0;
+
+    public CustomerAccount(){}
 
     public CustomerAccount(ItemManagement manager) {
         this.manager = manager;
@@ -44,6 +46,10 @@ public class CustomerAccount extends Account{
     }
 
 
+    public double getDiscount(){
+        String currentLoyalLevel = getLoyalLevel();
+        return (currentLoyalLevel.length()-1)*5;
+    }
 
 
     private void printStack(Stack<Item> stack){
@@ -56,7 +62,6 @@ public class CustomerAccount extends Account{
             stack.push(item);
         }
     }
-
 
 
     private void showCart(){
@@ -82,7 +87,7 @@ public class CustomerAccount extends Account{
 
     private void buy(){
 
-        //find and check quantity left
+        //find and print item info
         List<Item> found = manager.searchByID();
         Item foundItem = found.get(0);
         if (foundItem == null ){
@@ -90,29 +95,30 @@ public class CustomerAccount extends Account{
             return;
         }
         System.out.println(foundItem);
-
-        int left = foundItem.getQuantity();
-        if (left == 0){
-            System.err.println("Not available!");
-            return;
+        if (getDiscount() != 0){
+            System.out.println(+getDiscount()+"% discount for every item");
         }
+        double discountPrice = foundItem.getPrice()*(1-getDiscount()/100);
+
+        //check wallet
         checkAccountBalance();
-        if (wallet < foundItem.getPrice()){
+        if (wallet < discountPrice){
             System.err.println("Not enough money!");
             return;
         }
 
         //enter amount to buy
+        int left = foundItem.getQuantity();
         int number;
         do {
             do {
                 System.out.println("Enter how many you want to buy: ");
                 number = InputChecker.inputIntegerInBounds(1, left);
             } while (number > left);
-            if (wallet < foundItem.getPrice() * number){
+            if (wallet < discountPrice * number){
                 System.err.println("Not enough money!");
             }
-        } while (wallet < foundItem.getPrice() * number);
+        } while (wallet < discountPrice * number);
 
 
         //add to cart, change the quantity
@@ -122,12 +128,13 @@ public class CustomerAccount extends Account{
         cart.add(clone);
 
         //pay and inform
-        double paid = clone.getPrice() * clone.getQuantity();
+        double paid = discountPrice * clone.getQuantity();
         manager.receivePayment(paid);
         wallet -= paid;
         totalPaid += paid;
         System.out.println("Exchange successfully!");
         checkAccountBalance();
+        manager.update();
     }
 
 
@@ -140,7 +147,7 @@ public class CustomerAccount extends Account{
             System.err.println("No need to recharge!"); return;
         }
         System.out.println("How much money you want to recharge: ");
-        double charged = InputChecker.inputDoubleInBounds(0.1, Double.MAX_VALUE);
+        double charged = InputChecker.inputDoubleInBounds(0.1, MAX_MONEY);
         if (wallet + charged > MAX_MONEY){
             wallet = MAX_MONEY;
         } else {
@@ -159,10 +166,10 @@ public class CustomerAccount extends Account{
 
     private void showAccountInfo(){
         System.out.println("\nAccount Name: \t "+ getAccountName());
-        System.out.println("Password: \t\t "+ getPassword());
         System.out.printf("Account Balance: %.2f dollar(s)\n", wallet);
         System.out.printf("Total Payment: \t %.2f dollar(s)\n", totalPaid);
         System.out.println("Loyal Customer:  "+getLoyalLevel());
+        System.out.println("Discount: \t\t "+getDiscount()+"%");
     }
 
 

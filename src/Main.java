@@ -2,7 +2,7 @@ import account.Account;
 import account.CustomerAccount;
 import account.RetailerAccount;
 import inputChecker.InputChecker;
-import item_management.*;
+import management.*;
 
 import java.util.ArrayList;
 import java.util.List;

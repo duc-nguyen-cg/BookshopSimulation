@@ -1,60 +1,73 @@
 package account;
 
 import inputChecker.InputChecker;
-import item_management.ItemManagement;
+import management.AccountManagement;
+import management.ItemManagement;
 
 public class RetailerAccount extends Account{
-    private ItemManagement manager;
+    private ItemManagement itemManager;
+    private AccountManagement accountManager;
 
-    public RetailerAccount(ItemManagement manager) {
-        this.manager = manager;
+
+    public RetailerAccount(){}
+
+    public RetailerAccount(ItemManagement itemManager, AccountManagement accountManager) {
+        this.itemManager = itemManager;
+        this.accountManager = accountManager;
     }
 
 
-    public RetailerAccount(ItemManagement manager, String accountName, String password) {
+    public RetailerAccount(ItemManagement itemManager, AccountManagement accountManager, String accountName, String password) {
         super(accountName, password);
-        this.manager = manager;
+        this.itemManager = itemManager;
+        this.accountManager = accountManager;
+    }
+
+
+    public RetailerAccount(ItemManagement itemManager, String accountName, String password) {
+        super(accountName, password);
+        this.itemManager = itemManager;
     }
 
 
     private void view(){
-        manager.display();
+        itemManager.display();
     }
 
     private void add(){
-        manager.add();
+        itemManager.add();
     }
 
     private void remove(){
-        manager.removeByID();
+        itemManager.removeByID();
     }
 
     private void edit(){
-        manager.edit();
+        itemManager.edit();
     }
 
     private void search(){
-        manager.search();
+        itemManager.search();
     }
 
     private void sort(){
-        manager.sort();
+        itemManager.sort();
     }
 
     private void exportData(){
-        manager.exportData();
+        itemManager.exportData();
     }
 
     private void importData(){
-        manager.importData();
+        itemManager.importData();
     }
 
     private void clearAll(){
-        manager.clearAll();
+        itemManager.clearAll();
     }
 
     private void checkProfit() {
-        System.out.println("The current profit is "+manager.getProfit()+" dollars");
+        System.out.println("The current profit is "+ itemManager.getProfit()+" dollars");
     }
 
 

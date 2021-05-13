@@ -1,9 +1,9 @@
-package item_management;
+package management;
 
 import IOTask.*;
 import inputChecker.InputChecker;
 import basicClass.*;
-import item_management.observer.*;
+import management.observer.*;
 import java.util.*;
 
 import static IOTask.BinaryFileTask.BINARY_FILEPATH_REGEX;
@@ -47,7 +47,14 @@ public class ItemManagement {
         }
     }
 
-    private void update(){
+    public void update(){
+        List<Item> newList = new ArrayList<>();
+        for (Item item: itemList){
+            if (item.getQuantity() != 0){
+                newList.add(item);
+            }
+        }
+        itemList = newList;
         for (SubItemList observer: observers){
             observer.update(itemManager);
         }
@@ -158,7 +165,7 @@ public class ItemManagement {
 
         System.out.println("Enter ID to search: ");
         String searchID = scanner.nextLine();
-        List<Item> targetList = new ArrayList<>();
+        List<Item> targetList;
         if (searchID.matches(BOOK_ID_REGEX)){
             targetList = observers.get(0).getSubList();
         } else if (searchID.matches(MAGAZINE_ID_REGEX)){
@@ -322,7 +329,7 @@ public class ItemManagement {
     //search by ID in any List of items
     private Item binarySearch(List<Item> list, String id){
         if (!list.isEmpty()) {
-            List<Item> newList = new ArrayList<>(itemList);
+            List<Item> newList = new ArrayList<>(list);
             Collections.sort(newList, (o1, o2) -> o1.getId().compareTo(o2.getId()));  //sort by ID
 
             int left = 0;
@@ -360,11 +367,12 @@ public class ItemManagement {
 
     //print any list
     private void print(List<Item> list){
-        System.out.println("\nAvailable items: ");
+
         if (list.isEmpty()){
             System.err.println(EMPTY_MESSAGE);
             return;
         }
+        System.out.println("\nAvailable items: ");
         Iterator<Item> iterator = list.iterator();
         while (iterator.hasNext()){
             Item item = iterator.next();

@@ -1,8 +1,8 @@
-package item_management.observer;
+package management.observer;
 
 import basicClass.Item;
 import basicClass.Stationery;
-import item_management.ItemManagement;
+import management.ItemManagement;
 
 public class StationeryList extends SubItemList {
 

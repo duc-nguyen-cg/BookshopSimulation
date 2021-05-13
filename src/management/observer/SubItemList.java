@@ -1,7 +1,7 @@
-package item_management.observer;
+package management.observer;
 
 import basicClass.*;
-import item_management.ItemManagement;
+import management.ItemManagement;
 
 import java.util.ArrayList;
 import java.util.List;

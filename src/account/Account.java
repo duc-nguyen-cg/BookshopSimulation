@@ -30,17 +30,11 @@ public abstract class Account {
         return accountName;
     }
 
-    public void setAccountName(String accountName) {
-        this.accountName = accountName;
-    }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public abstract void run();
 
@@ -71,6 +65,12 @@ public abstract class Account {
 
 
     public void changeAccountName(){
+        System.out.println("Enter current password: ");
+        String inputPassword = scanner.nextLine();
+        if (!inputPassword.equals(password)){
+            System.err.println("Wrong password!");
+            return;
+        }
         System.out.println("Enter new account name: ");
         accountName = InputChecker.inputString(ACCOUNT_NAME_REGEX, ACCOUNT_NAME_RULE);
         System.out.println("Your account name was changed to "+accountName);
@@ -88,14 +88,5 @@ public abstract class Account {
         password = InputChecker.inputString(PASSWORD_REGEX, PASSWORD_RULE);
         System.out.println("Your password changed!");
     }
-
-
-    public void inputAccountInfo(){
-        System.out.println("Enter account name: ");
-        accountName = InputChecker.inputString(ACCOUNT_NAME_REGEX, ACCOUNT_NAME_RULE);
-        System.out.println("Enter password: ");
-        password = InputChecker.inputString(PASSWORD_REGEX, PASSWORD_RULE);
-    }
-
 
 }
